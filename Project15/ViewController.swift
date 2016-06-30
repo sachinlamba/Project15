@@ -9,7 +9,54 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var imageView: UIImageView!
+    var currentAnimation = 0
+    
+    @IBOutlet weak var tap: UIButton!
+   // @IBOutlet weak var tap: NSLayoutConstraint!
+    
+    @IBAction func tapped(sender: AnyObject) {
+        tap.hidden = true
+        
+        UIView.animateWithDuration(1, delay: 0, options: [],
+                        animations: { [unowned self] in
+                            switch self.currentAnimation {
+                            case 0:
+                                self.imageView.transform = CGAffineTransformMakeScale(2, 2)
+                                break
+                            case 1:
+                                self.imageView.transform = CGAffineTransformIdentity
+                            case 2:
+                                self.imageView.transform = CGAffineTransformMakeTranslation(-256, -256)
+                            case 3:
+                                self.imageView.transform = CGAffineTransformIdentity
+                            case 4:
+                                self.imageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+                            case 6:
+                                self.imageView.alpha = 0.1
+                                self.imageView.backgroundColor = UIColor.greenColor()
+                            case 7:
+                                self.imageView.alpha = 1
+                                self.imageView.backgroundColor = UIColor.clearColor()
+                            default:
+                                break
+                            }
+        }) { [unowned self] (finished: Bool) in
+                self.tap.hidden = false
 
+        }
+        
+    //    UIView.animateWithDuration(<#T##duration: NSTimeInterval##NSTimeInterval#>, delay: <#T##NSTimeInterval#>, options: <#T##UIViewAnimationOptions#>, animations: <#T##() -> Void#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+        
+        currentAnimation += 1
+        
+        if currentAnimation > 7 {
+            currentAnimation = 0
+        }
+    
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
